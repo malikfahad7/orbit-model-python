@@ -1,4 +1,4 @@
-# Gun Detection Model (YOLO + Flask + Cloudinary)
+# Gun & Knife Detection Model (YOLO + Flask + Cloudinary)
 
 This project is a **real-time object detection system** using the **YOLO model** with an **RTSP camera feed**, backed by **Flask** for web serving and **Cloudinary** for image uploads. Detected images and details are reported to a remote API.
 
