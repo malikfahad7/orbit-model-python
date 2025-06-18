@@ -1,48 +1,105 @@
-# 🔍 Suspicious Activity Detection System
+# Gun Detection Model (YOLO + Flask + Cloudinary)
 
-This project uses **YOLOv8** (Ultralytics), **OpenCV**, and **Cloudinary** to detect suspicious objects (e.g., weapons) in real-time from a webcam feed and report them via API with image evidence.
+This project is a **real-time object detection system** (e.g., for detecting guns or other suspicious objects) using the **YOLO model** with an **RTSP camera feed**, backed by **Flask** for web serving and **Cloudinary** for image uploads. Detected images and details are reported to a remote API.
 
 ---
 
-## 📦 How to Install Dependencies
+## 📦 Dependencies
 
-Make sure you have Python 3.8+ installed.
-
-1. Clone the repository or download the code.
-2. Navigate to the project directory.
-3. Run the following command to install all dependencies:
+Make sure you have Python 3.8+ installed. Then install the following dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## 🚀 How to Run
+### `requirements.txt`
 
-To start detection using the webcam, run:
+```txt
+opencv-python
+ultralytics
+flask
+flask-cors
+cloudinary
+requests
+```
+
+> 💡 `ultralytics` installs YOLOv8 and its required dependencies.
+
+---
+
+## 🔐 Setup Virtual Environment
+
+Use the following commands to set up and activate a virtual environment:
+
+```bash
+# Create virtual environment
+python -m venv venv
+
+# Activate on Windows
+venv\Scripts\activate
+
+# Activate on Linux/macOS
+source venv/bin/activate
+
+# Then install the dependencies
+pip install -r requirements.txt
+```
+
+---
+
+## ⚙️ Configuration
+
+Make sure to update the following sections in your code if needed:
+
+- **Cloudinary Credentials** (in `cloudinary.config`)
+- **RTSP Stream URL** (in `capture_frames()` function)
+- **YOLO Model Path** (update the `YOLO()` path to your trained model file)
+- **API Endpoint** (`API_URL` for reporting detections)
+
+---
+
+## ▶️ Run the App
+
+To start the detection system, run:
 
 ```bash
 python detecting-images.py
 ```
 
-## 🚀 How to  Switch form laptopt camera to IP Camera
+---
 
-By default, the system uses your laptop webcam:
-```bash
-video_capture = cv2.VideoCapture(0)
+## 📺 Access Live Feed
+
+Once the server is running, open your browser and visit:
+
 ```
-To use an IP camera feed, replace that line with:
-```bash
-# Replace with your actual IP camera stream URL
-ip_camera_url = 'http://192.168.1.100:8080/video'  # or use rtsp://...
-video_capture = cv2.VideoCapture(ip_camera_url)
+http://localhost:8000/video_feed
 ```
 
-Detected suspicious activities (e.g., "Knife", "Gun") will:
+You should see the live annotated video feed with detection boxes.
 
-> Be highlighted in the live video.
+---
 
-> Trigger a snapshot after a short delay.
+## 📤 Cloud Upload & API Report
 
-> Upload the snapshot to Cloudinary.
+When a suspicious object is detected:
+- A screenshot is saved.
+- It is uploaded to Cloudinary.
+- The detection data is POSTed to a remote API.
 
-> Send detection data to your backend API.
+---
+
+## 🛑 Stop the App
+
+Use `Ctrl + C` in the terminal. This will:
+- Stop the RTSP capture.
+- Release the video writer.
+- Safely shutdown the upload queue.
+
+---
+
+## 📝 Notes
+
+- Video is saved locally as: `detected_objects_live.mp4`
+- Images are uploaded to Cloudinary with the format: `dd-mm-yyyy/UUID.jpg`
+- Detection occurs every `4` frames (configurable via `skip_frames`)
