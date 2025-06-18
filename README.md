@@ -1,10 +1,10 @@
 # Gun Detection Model (YOLO + Flask + Cloudinary)
 
-This project is a **real-time object detection system** (e.g., for detecting guns or other suspicious objects) using the **YOLO model** with an **RTSP camera feed**, backed by **Flask** for web serving and **Cloudinary** for image uploads. Detected images and details are reported to a remote API.
+This project is a **real-time object detection system** using the **YOLO model** with an **RTSP camera feed**, backed by **Flask** for web serving and **Cloudinary** for image uploads. Detected images and details are reported to a remote API.
 
 ---
 
-## 📦 Dependencies
+## Dependencies
 
 Make sure you have Python 3.8+ installed. Then install the following dependencies:
 
@@ -47,18 +47,8 @@ pip install -r requirements.txt
 
 ---
 
-## ⚙️ Configuration
 
-Make sure to update the following sections in your code if needed:
-
-- **Cloudinary Credentials** (in `cloudinary.config`)
-- **RTSP Stream URL** (in `capture_frames()` function)
-- **YOLO Model Path** (update the `YOLO()` path to your trained model file)
-- **API Endpoint** (`API_URL` for reporting detections)
-
----
-
-## ▶️ Run the App
+## Run the App
 
 To start the detection system, run:
 
@@ -68,19 +58,7 @@ python detecting-images.py
 
 ---
 
-## 📺 Access Live Feed
-
-Once the server is running, open your browser and visit:
-
-```
-http://localhost:8000/video_feed
-```
-
-You should see the live annotated video feed with detection boxes.
-
----
-
-## 📤 Cloud Upload & API Report
+## Cloud Upload & API Report
 
 When a suspicious object is detected:
 - A screenshot is saved.
@@ -89,7 +67,7 @@ When a suspicious object is detected:
 
 ---
 
-## 🛑 Stop the App
+## Stop the App
 
 Use `Ctrl + C` in the terminal. This will:
 - Stop the RTSP capture.
@@ -98,8 +76,7 @@ Use `Ctrl + C` in the terminal. This will:
 
 ---
 
-## 📝 Notes
+## Notes
 
 - Video is saved locally as: `detected_objects_live.mp4`
 - Images are uploaded to Cloudinary with the format: `dd-mm-yyyy/UUID.jpg`
-- Detection occurs every `4` frames (configurable via `skip_frames`)
